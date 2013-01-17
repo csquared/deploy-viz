@@ -20,28 +20,9 @@ class Firehose
 
   def parsed(data)
     puts "app=atlas parsed=#{data.size}"
-    p data
-=begin
-    if data[:cloud] == "heroku.com" && data[:actor].include?("@heroku.com") && !data[:actor].include?("wolfpack")
-      lat, long = Geocoder.coordinates(data[:source_ip])
-      if lat.nil? || long.nil?
-        puts "app=atlas error=true lat=#{lat} long=#{long} ip=#{data[:source_ip]}"
-        return
-      end
-
-      actor = data[:actor]
-
-      record = Atlas::DB[:locations].where(actor: actor).first
-      if record
-        Atlas::DB[:locations]
-          .where(actor: actor)
-          .update(longitude: long, latitude: lat)
-      else
-        Atlas::DB[:locations]
-          .insert(latitude: lat,longitude: long, actor: actor)
-      end
+    if data[:action] == 'deploy-app'
+      puts "DEPLOY: #{data[:target]}"
     end
-=end
   end
 
   def channels

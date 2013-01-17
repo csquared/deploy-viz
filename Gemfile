@@ -1,5 +1,5 @@
 source :rubygems
 
-gem 'pusher-client'
+gem "pusher-client", github: "pusher/pusher-ruby-client"
 gem 'yajl-ruby'
 gem 'redis'
