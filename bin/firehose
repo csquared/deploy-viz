@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require_relative "../firehose"
+
+Firehose.new(
+  channel: ENV["PUSHER_CHANNEL"],
+  key:     ENV["PUSHER_KEY"],
+  secret:  ENV["PUSHER_SECRET"])
