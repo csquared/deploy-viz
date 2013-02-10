@@ -18,8 +18,8 @@ class Deploys
     redis.rpush('deploys', app_name)
   end
 
-  def self.flush!
-    length = ENV['MAX_DEPLOYS'] || redis.llen('deploys')
+  def self.flush!(length = nil)
+    length ||= redis.llen('deploys')
     Array.new(length.to_i) do
       redis.lpop('deploys')
     end
