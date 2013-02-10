@@ -1,4 +1,5 @@
 require 'redis'
+require 'uri'
 
 
 if ENV['REDISTOGO_URL']

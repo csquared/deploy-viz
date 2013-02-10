@@ -2,4 +2,7 @@
 
 require_relative "../deploys"
 
-Deploys.flush!
+popped = Deploys.flush!
+
+puts "Flushed #{popped.size} app names"
+puts popped.join(',')
