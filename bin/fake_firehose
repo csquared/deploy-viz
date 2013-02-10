@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require_relative "../deploys"
+
+i = 0
+loop do
+  app_name = "foo-#{i}"
+  puts app_name
+  Deploys.add(app_name)
+  i += 1
+  sleep 1
+end

@@ -6,22 +6,30 @@ require_relative "firehose/connection"
 class Firehose
   attr :channel
 
-  def initialize(opts={})
+  def initialize(opts={}, &block)
     @parser = Yajl::Parser.new(symbolize_keys: true)
-    @parser.on_parse_complete = method(:parsed)
+    @parser.on_parse_complete = method(:json_parsed)
 
     @channel    = opts[:channel]
     @connection = Firehose::Connection.new(self,
       key:    opts[:key],
       secret: opts[:secret])
 
+    @callback = block if block_given?
     @connection.connect
   end
 
-  def parsed(data)
-    puts "app=atlas parsed=#{data.size}"
-    if data[:action] == 'deploy-app'
-      puts "DEPLOY: #{data[:target]}"
+  def on_json(&block)
+    @callback = block if block_given?
+  end
+
+  def json_parsed(data)
+    puts "json_parsed=#{data.size}"
+    if @callback
+      puts "json_callback=true"
+      @callback.call(data)
+    else
+      puts "json_callback=false"
     end
   end
 
@@ -31,9 +39,9 @@ class Firehose
 
   def callback
     lambda do
-      puts "app=atlas callback=start"
+      puts "callback=start"
       @connection.socket[channel].bind("app") do |data|
-        puts "app=atlas data=#{data.size}"
+        puts "data=#{data.size}"
         @parser.parse(data)
       end
     end

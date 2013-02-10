@@ -1,8 +1,15 @@
 #!/usr/bin/env ruby
 
 require_relative "../firehose"
+require_relative "../deploys"
 
 Firehose.new(
   channel: ENV["PUSHER_CHANNEL"],
   key:     ENV["PUSHER_KEY"],
-  secret:  ENV["PUSHER_SECRET"])
+  secret:  ENV["PUSHER_SECRET"]) do |data|
+
+    if data[:action] == 'deploy-app'
+      puts "DEPLOY: #{data[:target]}"
+      Deploys.add(data[:target])
+    end
+  end
