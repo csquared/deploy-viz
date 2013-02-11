@@ -23,6 +23,6 @@ class Deploys
     length ||= redis.llen('deploys')
     Array.new(length.to_i) do
       redis.lpop('deploys')
-    end
+    end.compact
   end
 end
