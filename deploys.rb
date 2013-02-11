@@ -19,8 +19,12 @@ class Deploys
     redis.rpush('deploys', app_name)
   end
 
+  def self.queue_length
+    redis.llen('deploys')
+  end
+
   def self.flush!(length = nil)
-    length ||= redis.llen('deploys')
+    length ||= queue_length
     Array.new(length.to_i) do
       redis.lpop('deploys')
     end.compact
