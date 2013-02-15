@@ -23,10 +23,15 @@ class Deploys
     redis.llen('deploys')
   end
 
-  def self.flush!(length = nil)
-    length ||= queue_length
-    Array.new(length.to_i) do
+  def self.get(num)
+    Array.new(num) do
       redis.lpop('deploys')
     end.compact
+  end
+
+  def self.flush!
+    queue_length.times do
+      puts redis.lpop('deploys')
+    end
   end
 end
