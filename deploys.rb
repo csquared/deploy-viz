@@ -24,7 +24,7 @@ class Deploys
   end
 
   def self.get(num)
-    Array.new(num) do
+    Array.new(num.to_i) do
       redis.lpop('deploys')
     end.compact
   end
