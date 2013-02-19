@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+$stdout.sync = $stderr.sync = true
+
 require_relative "../deploys"
 
 loop do
