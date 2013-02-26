@@ -19,11 +19,6 @@ class Firehose
     @connection.connect
   end
 
-  def on_json(&block)
-    @callback = block if block_given?
-    @connection.connect
-  end
-
   def json_parsed(data)
     puts "json_parsed=#{data.size}"
     if @callback
