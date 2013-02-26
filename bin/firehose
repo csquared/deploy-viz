@@ -5,14 +5,19 @@ require_relative "../deploys"
 
 BLACKLIST = (ENV['BLACKLIST'] || '').split(',')
 
-Firehose.new(
+hose = Firehose.new(
   channel: ENV["PUSHER_CHANNEL"],
   key:     ENV["PUSHER_KEY"],
-  secret:  ENV["PUSHER_SECRET"]) do |data|
+  secret:  ENV["PUSHER_SECRET"])
 
-    if data[:action] == 'deploy-app'
-      next if BLACKLIST.find{ |string| data[:target] =~ /^#{string}/ }
-      puts "DEPLOY: #{data[:target]}"
-      Deploys.add(data[:target])
+hose.on_json do |data|
+  if data[:action] == 'deploy-app'
+    name = data[:target]
+    if BLACKLIST.find{ |string| name =~ /^#{string}/ }
+      puts "BLACKLIST: #{name}"
+    else
+      puts "DEPLOY: #{name}"
+      Deploys.add(name)
     end
   end
+end
