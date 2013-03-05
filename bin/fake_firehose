@@ -3,7 +3,7 @@
 require_relative "../deploys"
 
 i = 0
-text = ARGV[0] || 'foo'
+name = ARGV[0] || 'foo'
 
 loop do
   app_name = "#{name}-#{i}"
