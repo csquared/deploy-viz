@@ -3,10 +3,12 @@
 require_relative "../deploys"
 
 i = 0
+text = ARGV[0] || 'foo'
+
 loop do
-  app_name = "foo-#{i}"
+  app_name = "#{name}-#{i}"
   puts app_name
   Deploys.add(app_name)
   i += 1
-  sleep 1
+  sleep 0.5
 end
