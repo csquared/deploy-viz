@@ -1,0 +1,24 @@
+{
+  "name": "deployers",
+  "version": "0.0.0",
+  "description": "## API for Arduino to consume who's deploying on Heroku",
+  "main": "",
+  "dependencies": {
+    "ws": "~0.4.31",
+    "redis": "~0.10.1",
+    "logfmt": "~1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/csquared/deploy-viz.git"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/csquared/deploy-viz/issues"
+  }
+}
