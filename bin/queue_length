@@ -6,5 +6,5 @@ require_relative "../deploys"
 
 loop do
   puts "queue_length=#{Deploys.queue_length}"
-  sleep (ENV['MONITOR_INTERVAL'] || 1).to_i
+  sleep (ENV['MONITOR_INTERVAL'] || 5).to_i
 end
